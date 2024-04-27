@@ -1,0 +1,71 @@
+---
+
+---
+
+<new-todo>
+	<form class="flex gap-4">
+		<input
+			type="text"
+			id="task"
+			name="task"
+			placeholder="Nueva tarea"
+			class="rounded-lg placeholder:text-lg w-full"
+		/>
+		<button
+			type="submit"
+			class="form-input rounded-lg text-2xl"
+			>+</button
+		>
+	</form>
+</new-todo>
+
+<script>
+	interface Todo {
+		id: string;
+		task: string;
+		done: boolean;
+	}
+
+	class NewTodo extends HTMLElement {
+		todoList: Todo[];
+
+		constructor() {
+			super();
+
+			this.todoList = [];
+
+			const form = this.querySelector("form") as HTMLFormElement;
+
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+
+				const formData = new FormData(form);
+				const task = formData.get("task") as string;
+
+				const todo: Todo = {
+					id: crypto.randomUUID(),
+					task,
+					done: false,
+				};
+
+				this.todos = todo;
+
+				console.log(this.todos);
+			});
+		}
+
+		get todos(): Todo[] {
+			return this.todoList;
+		}
+
+		set todos(todo: Todo) {
+			this.todoList = [...this.todoList, todo];
+		}
+
+		setLS(todo: Todo) {
+			localStorage.setItem("todoList", JSON.stringify(todo));
+		}
+	}
+
+	customElements.define("new-todo", NewTodo);
+</script>

@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	task: string;
+}
+
+const { task } = Astro.props;
+---
+
+<todo>
+	<div class="flex gap-2">
+		<input
+			type="checkbox"
+			name="done"
+			id="done"
+		/>
+		<p>{task}</p>
+		<button>
+			<Icon name="lucide:trash-2" />
+		</button>
+	</div>
+</todo>
+
+<script>
+	class Todo extends HTMLElement {
+		constructor() {
+			super();
+		}
+	}
+
+	customElements.define("todo", Todo);
+</script>
