@@ -1,10 +1,43 @@
 ---
-import NewTodo from "./NewTodo.astro";
+import Todo from "./Todo.astro";
 ---
 
-<section class="max-w-xl mx-auto border-2 rounded-xl">
-	<div class="p-4 border-b-2">
-		<NewTodo />
-	</div>
-	<div class="p-4"></div>
-</section>
+<todo-list class="space-y-4"> </todo-list>
+
+<script>
+	import type { Todo } from "./NewTodo.astro.0.mts";
+
+	class TodoList extends HTMLElement {
+		constructor() {
+			super();
+
+			const getLS = localStorage.getItem("todoList") ?? "";
+
+			const todoList = JSON.parse(getLS) as Todo[];
+
+			todoList.forEach((todo) => {
+				const todoDiv = document.createElement("todo-task");
+				todoDiv.innerHTML = `
+					<div class="flex items-center gap-4">
+					<input
+						type="checkbox"
+						name="done"
+						id="done"
+						${todo.done ? "checked" : ""}
+					/>
+					<p class="text-lg grow">${todo.task}</p>
+					<button data-id=${todo.id}>
+						<Icon
+							name="lucide:trash-2"
+							class="text-red-500"
+						/>
+					</button>
+				</div>
+				`;
+				this.appendChild(todoDiv);
+			});
+		}
+	}
+
+	customElements.define("todo-list", TodoList);
+</script>

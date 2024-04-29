@@ -13,26 +13,22 @@
 		/>
 		<button
 			type="submit"
-			class="form-input rounded-lg text-2xl"
+			class="form-input rounded-lg text-2xl bg-indigo-500 text-white"
 			>+</button
 		>
 	</form>
 </new-todo>
 
 <script>
-	interface Todo {
+	export type Todo = {
 		id: string;
 		task: string;
 		done: boolean;
-	}
+	};
 
 	class NewTodo extends HTMLElement {
-		todoList: Todo[];
-
-		constructor() {
+		constructor(private todoList: Todo[] = []) {
 			super();
-
-			this.todoList = [];
 
 			const form = this.querySelector("form") as HTMLFormElement;
 
@@ -50,7 +46,7 @@
 
 				this.todos = todo;
 
-				console.log(this.todos);
+				this.setLS(this.todos);
 			});
 		}
 
@@ -62,7 +58,7 @@
 			this.todoList = [...this.todoList, todo];
 		}
 
-		setLS(todo: Todo) {
+		setLS(todo: Todo[]) {
 			localStorage.setItem("todoList", JSON.stringify(todo));
 		}
 	}

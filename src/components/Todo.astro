@@ -1,26 +1,32 @@
 ---
 import { Icon } from "astro-icon/components";
+import type { Todo } from "./NewTodo.astro.0.mts";
 
 interface Props {
-	task: string;
+	todo: Todo;
 }
 
-const { task } = Astro.props;
+const { todo } = Astro.props;
+const { id, task, done } = todo;
 ---
 
-<todo>
-	<div class="flex gap-2">
+<todo-task>
+	<div class="flex items-center gap-4">
 		<input
 			type="checkbox"
 			name="done"
 			id="done"
+			checked={done}
 		/>
-		<p>{task}</p>
-		<button>
-			<Icon name="lucide:trash-2" />
+		<p class="text-lg grow">{task}</p>
+		<button data-id={id}>
+			<Icon
+				name="lucide:trash-2"
+				class="text-red-500"
+			/>
 		</button>
 	</div>
-</todo>
+</todo-task>
 
 <script>
 	class Todo extends HTMLElement {
@@ -29,5 +35,5 @@ const { task } = Astro.props;
 		}
 	}
 
-	customElements.define("todo", Todo);
+	customElements.define("todo-task", Todo);
 </script>

@@ -1,9 +1,22 @@
 ---
-import TodoList from "../components/TodoList.astro";
 import MainLayout from "../layouts/MainLayout.astro";
+
+import NewTodo from "../components/NewTodo.astro";
+import TodoList from "../components/TodoList.astro";
 ---
 
 <MainLayout>
-	<h1 class="text-4xl capitalize font-bold text-center">Tareas pendientes</h1>
-	<TodoList />
+	<h1
+		class="text-4xl capitalize font-bold text-center text-slate-900 dark:text-white"
+	>
+		Tareas pendientes
+	</h1>
+	<section class="max-w-xl mx-auto border-2 rounded-xl">
+		<div class="p-4 border-b-2">
+			<NewTodo />
+		</div>
+		<div class="p-4">
+			<TodoList />
+		</div>
+	</section>
 </MainLayout>
